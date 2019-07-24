@@ -72,11 +72,11 @@
           </a>
         </div>
         <hr />
-        <form method="post" v-on:submit.prevent="submitLoginForm">
+        <form method="post" v-on:submit.prevent="login">
           <label for="email">Introduceți emailul:</label>
-          <input type="text" name="email" v-model="email" />
+          <input type="email" name="email" v-model="email" required />
           <label for="password">Introduceți parola:</label>
-          <input type="password" name="password" v-model="password" />
+          <input type="password" name="password" v-model="password" required />
           <!-- <PrettyCheck class="p-svg p-curve" color="primary">
             <svg slot="extra" class="svg svg-icon" viewBox="0 0 20 20">
               <path
@@ -95,12 +95,11 @@
           <router-link to="/register">Înregistrează-te!</router-link>
         </span>
       </div>
-
-      <notifications group="auth" />
     </main>
     <img src="../assets/img/login/blobs/Vector1.svg" id="Vector1" />
     <img src="../assets/img/login/blobs/Vector2.svg" id="Vector2" />
     <img src="../assets/img/login/blobs/Vector3.svg" id="Vector3" />
+    <notifications group="auth" />
   </div>
 </template>
 
@@ -215,6 +214,7 @@ form {
     outline-width: 0;
   }
   input[type="text"],
+  input[type="email"],
   input[type="password"] {
     background: transparent;
     border: none;
@@ -229,6 +229,7 @@ form {
     font-size: 1.4em;
   }
   input[type="text"]:focus,
+  input[type="email"]:focus,
   input[type="password"]:focus {
     border-bottom: 1px solid $blue-main;
   }
@@ -405,46 +406,34 @@ main {
 
 <script>
 export default {
-  // data: () => {
-  //   return {
-  //     email: "",
-  //     password: ""
-  //   };
-  // },
-  // methods: {
-  //   authenticate: function(provider) {
-  //     console.log(provider);
-  //     window.location.replace(this.$store.state.apiUri + "/auth/twitter");
-  //   },
-  //   submitLoginForm() {
-  //     this.axios({
-  //       method: "post",
-  //       url: this.$store.state.apiUri + "/auth/local/signin",
-  //       data: {
-  //         email: this.email,
-  //         password: this.password
-  //       }
-  //     })
-  //       .then(response => {
-  //         if (response.status === 200) {
-  //           this.$store.commit("SET_JWT", response.data.jwt);
-  //           this.$store.commit("SET_AUTHENTICATED_STATUS", true);
-  //           this.axios.defaults.headers.common["Authorization"] =
-  //             "Bearer " + response.data.jwt;
-  //           this.$router.push("/dashboard/latest");
-  //           this.$store.dispatch("loadUser");
-  //         }
-  //       })
-  //       .catch(error => {
-  //         console.log(error.response);
-  //         this.$notify({
-  //           group: "auth",
-  //           type: "error",
-  //           title: "Autentificarea a eșuat",
-  //           text: "Email sau parolă greșite!"
-  //         });
-  //       });
-  //   }
-  // }
+  data() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
+  methods: {
+    login() {
+      let email = this.email;
+      let password = this.password;
+      this.$store
+        .dispatch("login", { email, password })
+        .then(() => this.$router.push("/"))
+        .catch(err => {
+          let message = err.data.message;
+          // Translate API message response to Romanian
+          if (message === "Email not found")
+            message = "Nu există un cont cu acest email!";
+          if (message === "Wrong email or password")
+            message = "Email sau parolă greșite!";
+          this.$notify({
+            group: "auth",
+            title: "Eroare",
+            text: message,
+            type: "error"
+          });
+        });
+    }
+  }
 };
 </script>
