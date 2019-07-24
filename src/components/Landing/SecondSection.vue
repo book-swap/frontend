@@ -14,6 +14,7 @@
         </a>
       </div>
     </div>
+    <div class="hr"></div>
     <div class="card right">
       <img src="../../assets/img/landing/check.svg" alt="Checked" />
       <div>
@@ -36,6 +37,7 @@
 section {
   display: flex;
   justify-content: space-between;
+  border-radius: 15px;
 }
 .card {
   width: 49.5rem;
@@ -95,5 +97,37 @@ a {
   margin: 0 !important;
   top: 3px;
   left: 3px;
+}
+.hr {
+  border-bottom: 1px solid #ececec;
+}
+@media screen and (min-width: 1025px) {
+  .hr {
+    display: none;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .card {
+    box-shadow: none;
+    width: 100%;
+  }
+  section {
+    box-shadow: 0px 3px 20px rgba(54, 64, 82, 0.18);
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+@media screen and (max-width: 768px) {
+  section {
+    width: 98%;
+    img {
+      width: 70% !important;
+      height: auto !important;
+    }
+  }
+  .card {
+    height: 60rem;
+  }
 }
 </style>

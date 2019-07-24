@@ -46,6 +46,14 @@ footer {
   main > *:nth-child(1) {
     margin-top: 3rem;
   }
+  main > *:nth-child(2),
+  main > *:nth-child(3),
+  main > *:nth-child(4) {
+    margin-top: 8rem;
+  }
+  footer {
+    margin-top: 2rem;
+  }
 }
 </style>
 

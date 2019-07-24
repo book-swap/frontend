@@ -24,4 +24,9 @@ a {
   color: white;
   text-decoration: none;
 }
+@media screen and (max-width: 768px) {
+  footer {
+    height: 5rem;
+  }
+}
 </style>

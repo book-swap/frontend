@@ -47,4 +47,31 @@ a {
 div {
   padding-bottom: 5rem;
 }
+@media screen and (max-width: 1240px) {
+  section {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+}
+@media screen and (max-width: 768px) {
+  img {
+    width: 90%;
+  }
+  section {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  img {
+    width: 90%;
+  }
+  section {
+    text-align: center;
+  }
+
+  a {
+    padding: 13px 30%;
+  }
+}
 </style>
