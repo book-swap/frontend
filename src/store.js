@@ -18,6 +18,10 @@ export default new Vuex.Store({
     auth: (state, payload) => {
       state.token = payload.token;
       state.user = payload.user;
+    },
+    reset_state: state => {
+      state.token = undefined;
+      state.user = undefined;
     }
   },
   actions: {
@@ -45,6 +49,15 @@ export default new Vuex.Store({
             reject(err.response);
           });
       });
+    },
+    logout({ commit }) {
+      commit("reset_state");
+      localStorage.removeItem("bookswap");
+    }
+  },
+  getters: {
+    isLoggedIn: state => {
+      return !!(state.token && state.user);
     }
   },
   plugins: [vuexLocal.plugin]
