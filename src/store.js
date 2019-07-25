@@ -49,16 +49,25 @@ export default new Vuex.Store({
       });
     },
     register({ commit }, user) {
-      Vue.axios({
-        url: "local/register",
-        data: user,
-        method: "POST"
-      }).then(resp => {
-        const token = resp.data.data.jwt;
-        const user = resp.data;
+      return new Promise((resolve, reject) => {
+        Vue.axios({
+          url: "local/register",
+          data: user,
+          method: "POST"
+        })
+          .then(resp => {
+            const token = resp.data.data.jwt;
+            const user = resp.data.data;
+            delete user.jwt;
 
-        Vue.axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-        commit("auth", { token, user });
+            Vue.axios.defaults.headers.common["Authorization"] =
+              "Bearer " + token;
+            commit("auth", { token, user });
+            resolve(resp);
+          })
+          .catch(err => {
+            reject(err.response);
+          });
       });
     },
     logout({ commit }) {
@@ -70,6 +79,9 @@ export default new Vuex.Store({
   getters: {
     isLoggedIn: state => {
       return !!(state.token && state.user);
+    },
+    fullName: state => {
+      return `${state.user.firstName} ${state.user.lastName}`;
     }
   },
   plugins: [vuexLocal.plugin]

@@ -128,8 +128,9 @@ ul {
 export default {
   data() {
     return {
-      name: "Mihai Voinea",
-      avatar: "https://ui-avatars.com/api/?name=Mihai+Voinea",
+      name: this.$store.getters.fullName,
+      avatar:
+        "https://ui-avatars.com/api/?name=" + this.$store.getters.fullName,
       isDropdownOpen: false
     };
   },
