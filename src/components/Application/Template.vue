@@ -18,6 +18,14 @@ div.bookswap-app {
   width: 100%;
   font-size: 1.8rem;
 }
+@media screen and (max-width: 768px) {
+  main {
+    background: white;
+  }
+  div.bookswap-app {
+    background: white;
+  }
+}
 </style>
 
 <script>
