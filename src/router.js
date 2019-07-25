@@ -33,7 +33,13 @@ let router = new Router({
       children: [
         {
           path: "explore",
+          name: "explore",
           component: () => import("./pages/Explore.vue")
+        },
+        {
+          path: "settings",
+          name: "settings",
+          component: () => import("./pages/Settings.vue")
         }
       ]
     },

@@ -30,7 +30,7 @@
       <transition name="fade">
         <ul v-if="isDropdownOpen" class="nav-dropdown">
           <li>
-            <router-link to="/dashboard/settings">Setări</router-link>
+            <router-link to="/app/settings">Setări</router-link>
           </li>
           <li>
             <router-link to="/logout">Logout</router-link>

@@ -34,10 +34,8 @@ export default new Vuex.Store({
         })
           .then(resp => {
             const token = resp.data.data.jwt;
-            const user = {
-              email: resp.data.data.email,
-              id: resp.data.data.id
-            };
+            let user = resp.data.data;
+            delete user.jwt;
 
             Vue.axios.defaults.headers.common["Authorization"] =
               "Bearer " + token;
@@ -50,9 +48,23 @@ export default new Vuex.Store({
           });
       });
     },
+    register({ commit }, user) {
+      Vue.axios({
+        url: "local/register",
+        data: user,
+        method: "POST"
+      }).then(resp => {
+        const token = resp.data.data.jwt;
+        const user = resp.data;
+
+        Vue.axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+        commit("auth", { token, user });
+      });
+    },
     logout({ commit }) {
       commit("reset_state");
       localStorage.removeItem("bookswap");
+      Vue.axios.defaults.headers.common["Authorization"] = undefined;
     }
   },
   getters: {

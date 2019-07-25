@@ -56,31 +56,54 @@
           <div class="names-input">
             <div>
               <label for="firstName">Prenume</label>
-              <input type="text" name="firstName" v-model="firstName" />
+              <input
+                type="text"
+                name="firstName"
+                v-model="firstName"
+                required
+              />
             </div>
             <div>
               <label for="firstName">Nume</label>
-              <input type="text" name="lastName" v-model="lastName" />
+              <input type="text" name="lastName" v-model="lastName" required />
             </div>
           </div>
           <div class="location-input">
             <div>
-              <label for="region">Județ:</label>
-              <select id="region" @change="handleRegionChange">
-                <option value="empty" v-if="selectedRegion === undefined"
+              <label for="county">Județ:</label>
+              <select
+                id="county"
+                @change="handleCountyChange"
+                v-model="selectedCounty"
+                required
+              >
+                <option value="undefined" v-if="selectedCounty === undefined"
                   >Alege</option
                 >
                 <option
-                  v-for="(region, index) in regions"
+                  v-for="(county, index) in counties"
                   :key="index"
-                  :value="region"
-                  >{{ region }}</option
+                  :value="county.nume"
+                  :data-abr="county.abr"
+                  >{{ county.nume }}</option
                 >
               </select>
             </div>
             <div>
               <label for="city">Localitate:</label>
-              <select id="city" @change="handleCityChange">
+              <select
+                id="city"
+                v-model="selectedCity"
+                :disabled="selectedCounty === undefined"
+                required
+              >
+                <option
+                  value="undefined"
+                  v-if="
+                    selectedCity === undefined && selectedCounty !== undefined
+                  "
+                  >Alege</option
+                >
                 <option
                   v-for="(city, index) in cities"
                   :key="index"
@@ -91,9 +114,9 @@
             </div>
           </div>
           <label for="email">Email:</label>
-          <input type="text" name="email" v-model="email" />
+          <input type="email" name="email" v-model="email" required />
           <label for="password">Parolă:</label>
-          <input type="password" name="password" v-model="password" />
+          <input type="password" name="password" v-model="password" required />
 
           <div id="submit">
             <input type="submit" value="Intră în cont" />
@@ -236,6 +259,7 @@ form {
     outline-width: 0;
   }
   input[type="text"],
+  input[type="email"],
   input[type="password"],
   select {
     background: transparent;
@@ -251,6 +275,7 @@ form {
     font-size: 1.4em;
   }
   input[type="text"]:focus,
+  input[type="email"]:focus,
   input[type="password"]:focus,
   select:focus {
     border-bottom: 1px solid $blue-main;
@@ -428,123 +453,69 @@ main {
 </style>
 
 <script>
+import counties from "../assets/json/cities/_judete.json";
+
 export default {
-  // data: () => {
-  //   return {
-  //     email: "",
-  //     password: "",
-  //     firstName: "",
-  //     lastName: "",
-  //     regions: [],
-  //     cities: [],
-  //     selectedRegion: undefined,
-  //     selectedCity: undefined
-  //   };
-  // },
-  // mounted() {
-  //   this.axios({
-  //     method: "GET",
-  //     url: this.$store.state.apiUri + "/region"
-  //   })
-  //     .then(response => {
-  //       this.regions = response.data;
-  //       this.updateCities(this.selectedRegion);
-  //     })
-  //     .catch(error => console.log(error));
-  // },
-  // methods: {
-  //   handleRegionChange(event) {
-  //     this.selectedRegion = event.target.value;
-  //     this.cities = [];
-  //     this.updateCities(this.selectedRegion);
-  //   },
-  //   handleCityChange(event) {
-  //     this.selectedCity = event.target.value;
-  //   },
-  //   updateCities(region) {
-  //     this.axios({
-  //       method: "GET",
-  //       url: this.$store.state.apiUri + "/region/" + region
-  //     })
-  //       .then(response => {
-  //         this.cities = response.data;
-  //       })
-  //       .catch(error => console.log(error));
-  //   },
-  //   submitLoginForm() {
-  //     if (
-  //       this.email === "" ||
-  //       this.password === "" ||
-  //       this.firstName === "" ||
-  //       this.lastName === "" ||
-  //       this.selectedRegion == undefined ||
-  //       this.selectedCity == undefined
-  //     )
-  //       this.$notify({
-  //         group: "register",
-  //         type: "error",
-  //         title: "Înregistrarea a eșuat",
-  //         text: "Toate câmpurile trebuie completate!"
-  //       });
-  //     else {
-  //       this.axios({
-  //         method: "post",
-  //         url: this.$store.state.apiUri + "/auth/local/signup",
-  //         data: {
-  //           email: this.email,
-  //           password: this.password,
-  //           displayName: this.firstName,
-  //           fullName: this.firstName + " " + this.lastName,
-  //           region: this.selectedRegion,
-  //           location: this.selectedCity
-  //         }
-  //       })
-  //         .then(() => {
-  //           this.$notify({
-  //             group: "register",
-  //             type: "success",
-  //             title: "Înregistrare",
-  //             text: "Cont creat cu succes!"
-  //           });
-  //           this.axios({
-  //             method: "post",
-  //             url: this.$store.state.apiUri + "/auth/local/signin",
-  //             data: {
-  //               email: this.email,
-  //               password: this.password
-  //             }
-  //           })
-  //             .then(response => {
-  //               if (response.status === 200) {
-  //                 this.$store.commit("SET_JWT", response.data.jwt);
-  //                 this.$store.commit("SET_AUTHENTICATED_STATUS", true);
-  //                 this.axios.defaults.headers.common["Authorization"] =
-  //                   "Bearer " + response.data.jwt;
-  //                 this.$router.push("/dashboard/latest");
-  //                 this.$store.dispatch("loadUser");
-  //               }
-  //             })
-  //             .catch(error => {
-  //               console.log(error.response);
-  //               this.$notify({
-  //                 group: "auth",
-  //                 type: "error",
-  //                 title: "Autentificarea a eșuat",
-  //                 text: "A apărut o eroare!"
-  //               });
-  //             });
-  //         })
-  //         .catch(error => {
-  //           console.log(error);
-  //           this.$notify({
-  //             group: "register",
-  //             type: "error",
-  //             title: "Înregistrarea a eșuat",
-  //             text: "A apărut o eroare!"
-  //           });
-  //         });
-  //     }
-  //   }
-  // }
+  data: () => {
+    return {
+      email: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      counties,
+      cities: [],
+      selectedCounty: undefined,
+      selectedCity: undefined
+    };
+  },
+  methods: {
+    handleCountyChange(event) {
+      const abr =
+        event.target.options[event.target.options.selectedIndex].dataset.abr;
+      this.updateCities(abr);
+    },
+    updateCities(abr) {
+      import(`../assets/json/cities/${abr}.json`).then(cities => {
+        this.cities = cities.default;
+      });
+    },
+    submitLoginForm() {
+      if (
+        this.email === "" ||
+        this.password === "" ||
+        this.firstName === "" ||
+        this.lastName === "" ||
+        this.selectedCounty == undefined ||
+        this.selectedCity == undefined
+      )
+        return this.$notify({
+          group: "register",
+          type: "warn",
+          title: "Înregistrarea a eșuat",
+          text: "Completează toate câmpurile!"
+        });
+
+      this.$store
+        .dispatch("register", {
+          email: this.email,
+          password: this.password,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          county: this.selectedCounty,
+          city: this.selectedCity
+        })
+        .then(() => this.$router.push("/app/explore"))
+        .catch(err => {
+          let message = err.data.message;
+
+          this.$notify({
+            group: "auth",
+            title: "Eroare",
+            text: message,
+            type: "error"
+          });
+        });
+    }
+  }
 };
 </script>
