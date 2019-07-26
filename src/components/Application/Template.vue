@@ -21,6 +21,8 @@ div.bookswap-app {
 @media screen and (max-width: 768px) {
   main {
     background: white;
+
+    margin-top: 0;
   }
   div.bookswap-app {
     background: white;

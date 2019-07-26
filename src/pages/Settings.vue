@@ -126,6 +126,23 @@ form {
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  form {
+    box-shadow: none;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 !important;
+  }
+  input[type="submit"] {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 425px) {
+  input[type="submit"] {
+    width: 90%;
+  }
+}
 </style>
 
 <script>
