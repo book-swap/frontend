@@ -17,10 +17,10 @@
       </ul>
       <div id="right" class="hide-on-mobile">
         <a href="#" class="avatar">
-          <img :src="avatar" alt="Avatar" class="avatar" />
+          <img :src="avatarUrl" alt="Avatar" class="avatar" />
         </a>
         <a href="#" id="dropdown-toggle">
-          <span id="dropdown-toggle">{{ name }}</span>
+          <span id="dropdown-toggle">{{ fullName }}</span>
           <img
             src="../../assets/img/app/navigation/expand-button.svg"
             alt="Expand"
@@ -227,9 +227,6 @@ export default {
   mixins: [smoothReflow],
   data() {
     return {
-      name: this.$store.getters.fullName,
-      avatar:
-        "https://ui-avatars.com/api/?name=" + this.$store.getters.fullName,
       isDropdownOpen: false,
       isMobileNavigationCollapsed: false
     };
@@ -237,6 +234,14 @@ export default {
   methods: {
     toggleMobileNavigation() {
       this.isMobileNavigationCollapsed = !this.isMobileNavigationCollapsed;
+    }
+  },
+  computed: {
+    fullName() {
+      return this.$store.getters.fullName;
+    },
+    avatarUrl() {
+      return "https://ui-avatars.com/api/?name=" + this.fullName;
     }
   },
   mounted() {

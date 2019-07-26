@@ -1,6 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import VuexPersistence from "vuex-persist";
+import axios from "axios";
+
+// API URL
+axios.defaults.baseURL = process.env.API_URL || "http://localhost:8081/";
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
@@ -9,7 +13,7 @@ const vuexLocal = new VuexPersistence({
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     token: undefined,
     user: {}
@@ -27,7 +31,7 @@ export default new Vuex.Store({
   actions: {
     login({ commit }, user) {
       return new Promise((resolve, reject) => {
-        Vue.axios({
+        axios({
           url: "local/login",
           data: user,
           method: "POST"
@@ -37,8 +41,7 @@ export default new Vuex.Store({
             let user = resp.data.data;
             delete user.jwt;
 
-            Vue.axios.defaults.headers.common["Authorization"] =
-              "Bearer " + token;
+            axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 
             commit("auth", { token, user });
             resolve(resp);
@@ -50,7 +53,7 @@ export default new Vuex.Store({
     },
     register({ commit }, user) {
       return new Promise((resolve, reject) => {
-        Vue.axios({
+        axios({
           url: "local/register",
           data: user,
           method: "POST"
@@ -60,8 +63,7 @@ export default new Vuex.Store({
             const user = resp.data.data;
             delete user.jwt;
 
-            Vue.axios.defaults.headers.common["Authorization"] =
-              "Bearer " + token;
+            axios.defaults.headers.common["Authorization"] = "Bearer " + token;
             commit("auth", { token, user });
             resolve(resp);
           })
@@ -70,10 +72,31 @@ export default new Vuex.Store({
           });
       });
     },
+    updateUser({ commit, state }, user) {
+      return new Promise((resolve, reject) => {
+        axios({
+          url: "http://localhost:8082/me",
+          data: user,
+          method: "PATCH"
+        })
+          .then(resp => {
+            const token = state.token;
+            const user = resp.data;
+            delete user.jwt;
+
+            commit("auth", { token, user });
+            resolve(resp);
+          })
+          .catch(err => {
+            console.log(err.request);
+            reject(err.response);
+          });
+      });
+    },
     logout({ commit }) {
       commit("reset_state");
       localStorage.removeItem("bookswap");
-      Vue.axios.defaults.headers.common["Authorization"] = undefined;
+      axios.defaults.headers.common["Authorization"] = undefined;
     }
   },
   getters: {
@@ -86,3 +109,9 @@ export default new Vuex.Store({
   },
   plugins: [vuexLocal.plugin]
 });
+export default store;
+
+// Set JWT token header if token is set inside the state
+if (store.state.token !== undefined)
+  axios.defaults.headers.common["Authorization"] =
+    "Bearer " + store.state.token;
