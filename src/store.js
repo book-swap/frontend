@@ -4,7 +4,7 @@ import VuexPersistence from "vuex-persist";
 import axios from "axios";
 
 // API URL
-axios.defaults.baseURL = process.env.API_URL || "http://localhost:8081/";
+axios.defaults.baseURL = process.env.API_URL || "http://localhost/";
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
@@ -32,7 +32,7 @@ const store = new Vuex.Store({
     login({ commit }, user) {
       return new Promise((resolve, reject) => {
         axios({
-          url: "local/login",
+          url: "auth/local/login",
           data: user,
           method: "POST"
         })
@@ -54,7 +54,7 @@ const store = new Vuex.Store({
     register({ commit }, user) {
       return new Promise((resolve, reject) => {
         axios({
-          url: "local/register",
+          url: "auth/local/register",
           data: user,
           method: "POST"
         })
@@ -75,7 +75,7 @@ const store = new Vuex.Store({
     updateUser({ commit, state }, user) {
       return new Promise((resolve, reject) => {
         axios({
-          url: "http://localhost:8082/me",
+          url: "user/me",
           data: user,
           method: "PATCH"
         })
