@@ -24,3 +24,6 @@ npm run serve
 ```
 npm run build
 ```
+
+## License
+BookSwap is licensed under the [MIT license](https://github.com/book-swap/frontend/blob/master/LICENSE).
