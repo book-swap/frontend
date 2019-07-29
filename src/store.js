@@ -4,7 +4,7 @@ import VuexPersistence from "vuex-persist";
 import axios from "axios";
 
 // API URL
-axios.defaults.baseURL = process.env.URL || "http://localhost/";
+axios.defaults.baseURL = process.env.API_URL;
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
