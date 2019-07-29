@@ -1,0 +1,254 @@
+<template>
+  <div>
+<<<<<<< Updated upstream:src/pages/AddBookManual.vue
+    <form v-on:submit.prevent="submitAddBookForm">
+=======
+    <form>
+>>>>>>> Stashed changes:src/pages/AddBook.vue
+      <div>
+        <h2>Adaugă o carte</h2>
+        <p>Poți adăuga o carte pentru a o oferi la schimb</p>
+      </div>
+      <hr />
+      <div class="input-wrap">
+        <label for="title">Titlu:</label>
+        <input type="text" name="title" required v-model="title" />
+      </div>
+      <div class="input-wrap">
+        <label for="author">Autor:</label>
+        <input type="text" name="author" required v-model="author" />
+      </div>
+
+      <div class="input-wrap">
+<<<<<<< Updated upstream:src/pages/AddBookManual.vue
+        <label for="description">Descriere</label>
+        <textarea
+          type="text"
+          name="description"
+          required
+          v-model="description"
+        />
+      </div>
+      <div class="input-wrap">
+        <label for="cover">Link imagine copertă:</label>
+        <input type="text" name="cover" required v-model="coverUrl" />
+      </div>
+      <input type="submit" value="Adaugă" />
+    </form>
+    <notifications group="add-book" />
+=======
+        <label for="search_query">Titlu/Autor/ISBN:</label>
+        <input type="text" name="search_query" required @input="handleInput" />
+      </div>
+
+      <Loader v-if="loading" style="margin: 0 auto" />
+
+      <div v-if="loaded">
+        <strong>Alege o carte:</strong>
+        <ul class="books-list">
+          <Book v-for="(book, index) in books" :key="index" :book="book" />
+        </ul>
+      </div>
+
+      <div v-if="notFound">
+        <p>Cartea nu a putut fi găsită.</p>
+        <router-link to="addbook-manual" id="add-book-manul-anchor"
+          >Poți adăuga cartea manual</router-link
+        >
+      </div>
+
+      <div :style="{ paddingBottom: loading || loaded ? 0 : '2rem' }"></div>
+    </form>
+>>>>>>> Stashed changes:src/pages/AddBook.vue
+  </div>
+</template>
+<style lang="scss" scoped>
+<<<<<<< Updated upstream:src/pages/AddBookManual.vue
+input[type="submit"] {
+  width: 20%;
+  padding: 13px 35px;
+  background: $blue-main;
+  border-radius: 100px;
+  border: 0;
+  color: white;
+  display: block;
+  margin: 10px auto 20px auto;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  &:hover {
+    background: #2d60ed;
+  }
+=======
+#add-book-manul-anchor {
+  color: $blue-main;
+  display: block;
+}
+.books-list {
+  padding: 0;
+  display: flex;
+  justify-content: space-evenly;
+>>>>>>> Stashed changes:src/pages/AddBook.vue
+}
+form {
+  max-width: 70rem;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  box-shadow: 0px 3px 7px rgba(54, 64, 82, 0.25);
+  border-radius: 7px;
+  margin: 3em auto;
+  & > * {
+    margin: 5px 20px;
+  }
+  .input-wrap {
+    display: flex;
+    flex-direction: column;
+    textarea {
+      height: 8em !important;
+    }
+    input,
+    select,
+    textarea {
+      padding: 0 10px;
+      background-color: #fff;
+      border: 1px solid #dbdbdb;
+      color: #363636;
+      box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
+
+      line-height: 1.5;
+      border-radius: 3px;
+      height: 2em;
+    }
+    label {
+      font-weight: bold;
+      margin: 0.5em 0;
+    }
+  }
+}
+h2 {
+  color: #363636;
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 1.125;
+  margin: 20px 0 0 0;
+}
+p {
+  margin: 4px 0 0 0;
+}
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #f5f5f5;
+  padding: 0;
+}
+@media screen and (max-width: 768px) {
+  form {
+    box-shadow: none;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 !important;
+  }
+  input[type="submit"] {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 425px) {
+  input[type="submit"] {
+    width: 90%;
+  }
+}
+</style>
+
+<script>
+<<<<<<< Updated upstream:src/pages/AddBookManual.vue
+export default {
+  data() {
+    return {
+      title: "",
+      author: "",
+      description: "",
+      coverUrl: ""
+    };
+  },
+  methods: {
+    submitAddBookForm() {
+      if (this.title === "" || this.author === "" || this.cover === "")
+        return this.$notify({
+          group: "add-book",
+          type: "error",
+          title: "Adăugarea a eșuat",
+          text: "Toate câmpurile trebuie completate!"
+        });
+      if (!this.isURL(this.coverUrl))
+        return this.$notify({
+          group: "add-book",
+          type: "error",
+          title: "Adăugarea a eșuat",
+          text: "Link-ul pentru copertă este invalid!"
+        });
+    },
+    isURL(str) {
+      var pattern = new RegExp(
+        "^(https?:\\/\\/)?" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+          "(\\#[-a-z\\d_]*)?$",
+        "i"
+      ); // fragment locator
+      return pattern.test(str);
+=======
+import smoothReflow from "vue-smooth-reflow";
+import axios from "../request";
+import Loader from "../components/Loader.vue";
+import Book from "../components/QueryBook";
+
+export default {
+  mixins: [smoothReflow],
+  mounted() {
+    this.$smoothReflow({ el: "form" });
+  },
+  components: { Loader, Book },
+  data() {
+    return {
+      timeout: undefined,
+      notFound: false,
+      loading: false,
+      loaded: false,
+      books: []
+    };
+  },
+  methods: {
+    handleInput(event) {
+      clearTimeout(this.timeout);
+      this.loading = true;
+      this.loaded = false;
+      this.notFound = false;
+      this.books = [];
+
+      this.timeout = setTimeout(async () => {
+        const query = event.target.value;
+        try {
+          const response = await axios.get("query", { params: { q: query } });
+
+          this.books = response.data;
+          this.loading = false;
+          this.loaded = true;
+        } catch (error) {
+          if (
+            error.response.status === 404 &&
+            error.response.data.message === "Not found"
+          ) {
+            this.notFound = true;
+            this.loaded = false;
+            this.loading = false;
+          }
+        }
+      }, 500);
+>>>>>>> Stashed changes:src/pages/AddBook.vue
+    }
+  }
+};
+</script>
