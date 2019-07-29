@@ -8,11 +8,11 @@
         <li>
           <router-link to="/app/explore">Explorează</router-link>
         </li>
-        <li>
+        <!-- <li>
           <router-link to="#">Cărți dorite</router-link>
-        </li>
+        </li>-->
         <li>
-          <router-link to="#">Cărți oferite</router-link>
+          <router-link to="/app/mybooks">Cărțile mele</router-link>
         </li>
       </ul>
       <div id="right" class="hide-on-mobile">
@@ -60,11 +60,11 @@
           <li>
             <router-link to="/app/explore">Explorează</router-link>
           </li>
-          <li>
+          <!-- <li>
             <router-link to="#">Cărți dorite</router-link>
-          </li>
+          </li>-->
           <li>
-            <router-link to="#">Cărți oferite</router-link>
+            <router-link to="/app/mybooks">Cărțile mele</router-link>
           </li>
           <li>
             <router-link to="/app/settings">Setări</router-link>

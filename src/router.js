@@ -50,6 +50,11 @@ let router = new Router({
           path: "addbook-manual",
           name: "addbook-manual",
           component: () => import("./pages/AddBookManual.vue")
+        },
+        {
+          path: "mybooks",
+          name: "mybooks",
+          component: () => import("./pages/MyBooks.vue")
         }
       ]
     },

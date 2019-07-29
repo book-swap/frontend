@@ -1,12 +1,12 @@
 <template>
   <div class="book">
-    <img :src="book.coverUrl || 'no_cover_small.png'" :alt="book.title" />
+    <img :src="book.coverUrl || '/no_cover_small.png'" :alt="book.title" />
     <div class="book-info">
       <span class="title">{{ book.title }}</span>
       <br />
       <span class="author">{{ book.author }}</span>
     </div>
-    <button @click="handleAddBook">Adaugă</button>
+    <button @click.prevent="handleAddBook">Adaugă</button>
   </div>
 </template>
 
@@ -48,11 +48,42 @@ img {
 </style>
 
 <script>
+import axios from "../request";
 export default {
-  props: ["book", "addBookCallbackFn"],
+  props: ["book"],
   methods: {
-    handleAddBook() {
-      this.addBookCallbackFn(this.book);
+    async handleAddBook() {
+      console.log(this.book);
+      try {
+        const response = await axios({
+          method: "post",
+          url: "/book",
+          data: {
+            title: this.book.title,
+            author: this.book.author,
+            rating: this.book.rating,
+            coverUrl: this.book.coverUrl
+          }
+        });
+        if (response.status === 200) {
+          this.$notify({
+            group: "add-book",
+            type: "success ",
+            title: "Adăugat cu success",
+            text: "Cartea a fost adăugată!"
+          });
+        } else {
+          console.log(response);
+          this.$notify({
+            group: "add-book",
+            type: "error",
+            title: "Adăugarea a eșuat",
+            text: "A apărut o eroare la adăugarea cărții!"
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };

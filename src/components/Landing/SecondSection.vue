@@ -1,36 +1,40 @@
 <template>
-  <section>
-    <div class="card left">
-      <img src="../../assets/img/landing/chat.svg" alt="Chat" />
-      <div>
-        <h2>Comunicare directă</h2>
-        <p>
-          Ai parte de o comunicare directă cu cealaltă persoană. Poți face o
-          ofertă de schimb direct din chatul platformei.
-        </p>
+  <div>
+    <section>
+      <div class="card left">
+        <img src="../../assets/img/landing/chat.svg" alt="Chat" />
+        <div>
+          <h2>Comunicare directă</h2>
+          <p>
+            Ai parte de o comunicare directă cu cealaltă persoană. Poți face o
+            ofertă de schimb direct din chatul platformei.
+          </p>
+          <a href="#">
+            Află mai multe
+            <img src="../../assets/img/landing/arrow-right.svg" class="icon" />
+          </a>
+        </div>
+      </div>
+      <div class="hr"></div>
+      <div class="card right">
+        <img src="../../assets/img/landing/check.svg" alt="Checked" />
+        <div>
+          <h2>Condiții excelente</h2>
+          <p>
+            Ne asigurăm că toate cărțile adăugate pe platforma noastră sunt în
+            condiții bune pentru a-ți oferi o experiență pe măsura așteptărilor
+            tale.
+          </p>
+        </div>
         <a href="#">
           Află mai multe
           <img src="../../assets/img/landing/arrow-right.svg" class="icon" />
         </a>
       </div>
-    </div>
-    <div class="hr"></div>
-    <div class="card right">
-      <img src="../../assets/img/landing/check.svg" alt="Checked" />
-      <div>
-        <h2>Condiții excelente</h2>
-        <p>
-          Ne asigurăm că toate cărțile adăugate pe platforma noastră sunt în
-          condiții bune pentru a-ți oferi o experiență pe măsura așteptărilor
-          tale.
-        </p>
-      </div>
-      <a href="#">
-        Află mai multe
-        <img src="../../assets/img/landing/arrow-right.svg" class="icon" />
-      </a>
-    </div>
-  </section>
+    </section>
+
+    <img src="../../assets/img/landing/blobs/Vector3.svg" id="Vector3" />
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -101,6 +105,18 @@ a {
 .hr {
   border-bottom: 1px solid #ececec;
 }
+
+@media screen and (max-width: 1440px) {
+  #Vector3 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1240px) {
+  .card {
+    width: 48%;
+  }
+}
 @media screen and (min-width: 1025px) {
   .hr {
     display: none;
@@ -129,5 +145,17 @@ a {
   .card {
     height: 60rem;
   }
+}
+
+#Vector3 {
+  position: relative;
+  z-index: -1;
+  bottom: 92rem;
+  right: 80%;
+  width: 35rem;
+  height: auto;
+
+  clear: both;
+  float: right;
 }
 </style>

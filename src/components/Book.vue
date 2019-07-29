@@ -70,12 +70,14 @@ hr {
 .book {
   margin-bottom: 2rem;
   display: flex;
+  margin: 0 1rem 2rem;
 }
 .book-info {
   margin: 2rem 2rem 2rem 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
 }
 h3 {
   font-style: normal;
