@@ -138,13 +138,6 @@ h3 {
 import StarRating from "../components/StarRating";
 export default {
   components: { StarRating },
-  props: ["coverUrl"],
-  data() {
-    return {
-      title: "Sapiens. Scurta istorie a omenirii",
-      author: "Yuval Noah Harari",
-      rating: 4.45
-    };
-  }
+  props: ["coverUrl", "title", "author", "rating"]
 };
 </script>

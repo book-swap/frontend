@@ -17,12 +17,7 @@
 
       <div class="input-wrap">
         <label for="description">Descriere</label>
-        <textarea
-          type="text"
-          name="description"
-          required
-          v-model="description"
-        />
+        <textarea type="text" name="description" required v-model="description" />
       </div>
       <div class="input-wrap">
         <label for="cover">Link imagine copertă:</label>
@@ -121,6 +116,7 @@ hr {
 </style>
 
 <script>
+import axios from "../request";
 export default {
   data() {
     return {
@@ -131,7 +127,7 @@ export default {
     };
   },
   methods: {
-    submitAddBookForm() {
+    async submitAddBookForm() {
       if (this.title === "" || this.author === "" || this.cover === "")
         return this.$notify({
           group: "add-book",
@@ -146,6 +142,36 @@ export default {
           title: "Adăugarea a eșuat",
           text: "Link-ul pentru copertă este invalid!"
         });
+      try {
+        const response = await axios({
+          method: "post",
+          url: "/book",
+          data: {
+            title: this.title,
+            author: this.author,
+            description: this.description === "" ? undefined : this.description,
+            coverUrl: this.coverUrl
+          }
+        });
+        if (response.status === 200) {
+          this.$notify({
+            group: "add-book",
+            type: "success ",
+            title: "Adăugat cu success",
+            text: "Cartea a fost adăugată!"
+          });
+        } else {
+          console.log(response);
+          this.$notify({
+            group: "add-book",
+            type: "error",
+            title: "Adăugarea a eșuat",
+            text: "A apărut o eroare la adăugarea cărții!"
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
     isURL(str) {
       var pattern = new RegExp(
