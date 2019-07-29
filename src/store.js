@@ -4,7 +4,7 @@ import VuexPersistence from "vuex-persist";
 import axios from "axios";
 
 // API URL
-axios.defaults.baseURL = process.env.API_URL;
+axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "http://localhost/" : "https://api.bookswap.ro";
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
