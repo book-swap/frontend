@@ -91,7 +91,6 @@ hr {
   height: 1px;
   border: 0;
   border-top: 1px solid #f5f5f5;
-  margin: 1em 0;
   padding: 0;
 }
 form {

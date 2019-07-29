@@ -11,6 +11,7 @@
     </div>
 
     <Footer />
+    <Blobs />
   </div>
 </template>
 
@@ -25,7 +26,9 @@ main > *:nth-child(1) {
   margin-top: 17rem;
 }
 
-main > *:nth-child(2),
+main > *:nth-child(2) {
+  margin-top: 37rem;
+}
 main > *:nth-child(3),
 main > *:nth-child(4) {
   margin-top: 25rem;
@@ -64,6 +67,7 @@ import SecondSection from "../components/Landing/SecondSection.vue";
 import ThirdSection from "../components/Landing/ThirdSection.vue";
 import FourthSection from "../components/Landing/FourthSection.vue";
 import Footer from "../components/Landing/Footer.vue";
+import Blobs from "../components/Landing/Blobs.vue";
 
 export default {
   components: {
@@ -72,7 +76,8 @@ export default {
     SecondSection,
     ThirdSection,
     FourthSection,
-    Footer
+    Footer,
+    Blobs
   }
 };
 </script>

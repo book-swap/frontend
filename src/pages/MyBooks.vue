@@ -1,9 +1,9 @@
 <template>
   <main>
     <div class="page-title">
-      <h2>Explorează</h2>
+      <h2>Cărțile mele</h2>
       <div class="rightside-buttons">
-        <a href="#" class="filter">
+        <!-- <a href="#" class="filter">
           <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M4 5h16a1 1 0 1 1 0 2H4a1 1 0 0 1 0-2zm2 6h12a1 1 0 0 1 0 2H6a1 1 0 0 1 0-2zm3 6h6a1 1 0 0 1 0 2H9a1 1 0 0 1 0-2z"
@@ -11,7 +11,7 @@
           </svg>
           Filtrează
         </a>
-        <div class="vr"></div>
+        <div class="vr"></div>-->
         <router-link to="addbook" class="add-new">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
             <path
@@ -119,7 +119,7 @@ import BooksGrid from "../components/BooksGrid";
 export default {
   components: { BooksGrid },
   mounted() {
-    axios({ method: "GET", url: "/book" })
+    axios({ method: "GET", url: "/book/me" })
       .then(response => {
         if (response.status === 200) this.books = response.data;
       })

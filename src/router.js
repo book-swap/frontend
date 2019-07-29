@@ -40,6 +40,21 @@ let router = new Router({
           path: "settings",
           name: "settings",
           component: () => import("./pages/Settings.vue")
+        },
+        {
+          path: "addbook",
+          name: "addbook",
+          component: () => import("./pages/AddBook.vue")
+        },
+        {
+          path: "addbook-manual",
+          name: "addbook-manual",
+          component: () => import("./pages/AddBookManual.vue")
+        },
+        {
+          path: "mybooks",
+          name: "mybooks",
+          component: () => import("./pages/MyBooks.vue")
         }
       ]
     },
