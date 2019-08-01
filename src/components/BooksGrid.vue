@@ -8,6 +8,7 @@
       :title="book.title"
       :author="book.author"
       :rating="book.rating"
+      :addedBy="book.addedBy"
     />
   </div>
 </template>

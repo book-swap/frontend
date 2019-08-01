@@ -60,6 +60,16 @@ let router = new Router({
           path: "viewbook/:id",
           name: "viewbook",
           component: () => import("./pages/ViewBook.vue")
+        },
+        {
+          path: "chat",
+          name: "chat",
+          component: () => import("./pages/Chat.vue")
+        },
+        {
+          path: "chat/:id",
+          name: "chat",
+          component: () => import("./pages/Chat.vue")
         }
       ]
     },

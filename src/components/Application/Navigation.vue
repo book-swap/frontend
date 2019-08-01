@@ -14,8 +14,18 @@
         <li>
           <router-link to="/app/mybooks">Cărțile mele</router-link>
         </li>
+        <li>
+          <router-link to="/app/chat">Mesaje</router-link>
+        </li>
       </ul>
       <div id="right" class="hide-on-mobile">
+        <!-- <a href="#" class="mail-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+            <path
+              d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2zm16 3.38V6H4v1.38l8 4 8-4zm0 2.24l-7.55 3.77a1 1 0 0 1-.9 0L4 9.62V18h16V9.62z"
+            />
+          </svg>
+        </a>-->
         <a href="#" class="avatar">
           <img :src="avatarUrl" alt="Avatar" class="avatar" />
         </a>
@@ -67,6 +77,9 @@
             <router-link to="/app/mybooks">Cărțile mele</router-link>
           </li>
           <li>
+            <router-link to="/app/chat">Mesaje</router-link>
+          </li>
+          <li>
             <router-link to="/app/settings">Setări</router-link>
           </li>
           <li>
@@ -82,6 +95,15 @@
 $hamburger-layer-color: $blue-main;
 @import "hamburgers/_sass/hamburgers/hamburgers.scss";
 $border-gray: #ececec;
+
+.mail-icon {
+  margin-right: 2rem;
+  fill: $blue-main;
+  &:hover {
+    fill: $blue-main-hover;
+  }
+}
+
 .nav-dropdown {
   display: block;
   position: absolute;
