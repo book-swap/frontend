@@ -23,7 +23,9 @@
 
       <div v-if="notFound">
         <p>Cartea nu a putut fi găsită.</p>
-        <router-link to="addbook-manual" id="add-book-manul-anchor">Poți adăuga cartea manual</router-link>
+        <router-link to="addbook-manual" id="add-book-manul-anchor"
+          >Poți adăuga cartea manual</router-link
+        >
       </div>
 
       <div :style="{ paddingBottom: loading || loaded ? 0 : '2rem' }"></div>

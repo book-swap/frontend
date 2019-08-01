@@ -28,7 +28,15 @@
       <span class="addedByLocation"
         >{{ addedByUser.county }}, {{ addedByUser.city }}</span
       >
-      <a class="offer" :href="`mailto:${addedByUser.email}`">Oferă un schimb</a>
+      <router-link
+        v-if="addedByUser.id !== $store.state.user.id"
+        class="offer"
+        :to="`/app/chat/${addedByUser.id}`"
+        >Oferă un schimb</router-link
+      >
+      <a href="#" class="offer" v-else @click.prevent="deleteBook"
+        >Elimină cartea</a
+      >
     </div>
   </div>
 </template>
@@ -117,6 +125,7 @@
   }
 }
 .cover {
+  min-width: 15rem;
   width: 15rem;
   height: 22.5rem;
   object-fit: cover;
@@ -177,6 +186,16 @@ export default {
     },
     avatarUrl() {
       return "https://ui-avatars.com/api/?size=256&name=" + this.fullName;
+    }
+  },
+  methods: {
+    async deleteBook() {
+      try {
+        const resp = await axios.delete("/book/" + this.$route.params.id);
+        if (resp.status === 200) this.$router.push("/app/mybooks");
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };

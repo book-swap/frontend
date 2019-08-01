@@ -1,5 +1,5 @@
 <template>
-  <div class="book card">
+  <div class="book card" v-if="addedBy._id !== $store.state.user.id || $route.name === 'mybooks'">
     <img class="cover" :src="coverUrl || '/no_cover.png'" :alt="title" />
     <div class="book-info">
       <div>
@@ -13,12 +13,22 @@
         <hr />
         <div class="added-by">
           Adăugat de
-          <span class="added-by-user">Mihai Voinea</span>
+          <span class="added-by-user">{{ addedBy.firstName }} {{ addedBy.lastName }}</span>
         </div>
       </div>
       <div class="action-buttons">
-        <router-link :to="`viewbook/${id}`">Detalii</router-link>
-        <a href="#">Fă o ofertă</a>
+        <router-link
+          class="details"
+          :style="{
+            margin: addedBy._id !== $store.state.user.id ? 'initial' : '0 auto'
+          }"
+          :to="`viewbook/${id}`"
+        >Detalii</router-link>
+        <router-link
+          class="offer"
+          v-if="addedBy._id !== $store.state.user.id"
+          :to="`/app/chat/${addedBy._id}`"
+        >Fă o ofertă</router-link>
       </div>
     </div>
   </div>
@@ -31,14 +41,14 @@
     color: white;
     border-radius: 100px;
   }
-  a:first-child {
+  .details {
     background: $blue-main;
     &:hover {
       background: $blue-main-hover;
     }
     padding: 13px 44px;
   }
-  a:last-child {
+  .offer {
     background: $red-main;
     &:hover {
       background: $red-main-hover;
@@ -140,6 +150,6 @@ h3 {
 import StarRating from "../components/StarRating";
 export default {
   components: { StarRating },
-  props: ["coverUrl", "title", "author", "rating", "id"]
+  props: ["coverUrl", "title", "author", "rating", "id", "addedBy"]
 };
 </script>

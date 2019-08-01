@@ -18,10 +18,7 @@
           <ul id="social_media_follow">
             <li>
               <a href="#">
-                <img
-                  src="../assets/img/login/social_media_follow_icon/twitter.svg"
-                  alt="Twitter"
-                />
+                <img src="../assets/img/login/social_media_follow_icon/twitter.svg" alt="Twitter" />
                 <span>Twitter</span>
               </a>
             </li>
@@ -52,7 +49,7 @@
           <span>Înapoi</span>
         </router-link>
         <span class="title">Intră în cont</span>
-        <div id="social_media_login">
+        <!-- <div id="social_media_login">
           <a href="#">
             <img src="../assets/img/login/google_icon.svg" alt="Google" />
             <br />
@@ -70,7 +67,7 @@
             <br />
             <span>Login cu Facebook</span>
           </a>
-        </div>
+        </div>-->
         <hr />
         <form method="post" v-on:submit.prevent="login">
           <label for="email">Introduceți emailul:</label>
