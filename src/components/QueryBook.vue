@@ -53,7 +53,6 @@ export default {
   props: ["book"],
   methods: {
     async handleAddBook() {
-      console.log(this.book);
       try {
         const response = await axios({
           method: "post",

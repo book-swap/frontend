@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="action-buttons">
-        <a href="#">Detalii</a>
+        <router-link :to="`viewbook/${id}`">Detalii</router-link>
         <a href="#">Fă o ofertă</a>
       </div>
     </div>
@@ -140,6 +140,6 @@ h3 {
 import StarRating from "../components/StarRating";
 export default {
   components: { StarRating },
-  props: ["coverUrl", "title", "author", "rating"]
+  props: ["coverUrl", "title", "author", "rating", "id"]
 };
 </script>

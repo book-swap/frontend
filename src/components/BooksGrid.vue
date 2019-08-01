@@ -4,6 +4,7 @@
       v-for="(book, index) in books"
       :key="index"
       :coverUrl="book.coverUrl"
+      :id="book._id"
       :title="book.title"
       :author="book.author"
       :rating="book.rating"
